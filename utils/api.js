@@ -3,7 +3,12 @@ import { AsyncStorage } from "react-native";
 const DECKS_STORAGE_KEY = "MobileFlashCards:decks";
 
 // return all decks with title, questions and answers
-export function getDecks() {}
+export function getDecks() {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(
+    decks =>
+      decks === null ? "there are no decks at the moment" : JSON.parse(decks)
+  );
+}
 
 // takes in a single ID and returns the deck associated with that ID (let's assume is the lower cased title)
 export function getDeck(id) {}
@@ -13,7 +18,7 @@ export function saveDeckTitle(title) {
   const newDeck = {
     [title.toLowerCase()]: {
       title,
-      questionAndAnswers: []
+      questionsAndAnswers: []
     }
   };
 
@@ -22,3 +27,9 @@ export function saveDeckTitle(title) {
 
 // add the 'card' to the deck with title 'title'
 export function addCardToDeck(title, card) {}
+
+export function removeDecks() {
+  AsyncStorage.removeItem(DECKS_STORAGE_KEY, () =>
+    console.log("decks removed")
+  );
+}

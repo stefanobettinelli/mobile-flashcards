@@ -1,15 +1,19 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import { TabNavigator } from "react-navigation";
+import { View, StatusBar } from "react-native";
+import { Constants } from "expo";
+import { StackNavigator, TabNavigator } from "react-navigation";
 import DeckListContainer from "./deck-list/DeckListContainer";
 import NewDeckContainer from "./new-deck/NewDeckContainer";
+import DeckDetail from "./deck-detail/DeckDetail";
 import rootReducer from "./rootReducer";
+import { purple } from "./utils/colors";
 
 const store = createStore(rootReducer);
 
 const Tabs = TabNavigator({
-  Home: {
+  Decks: {
     screen: DeckListContainer
   },
   NewDeck: {
@@ -17,10 +21,36 @@ const Tabs = TabNavigator({
   }
 });
 
+const MainNavigation = StackNavigator({
+  Home: {
+    screen: Tabs,
+    headerMode: "none",
+    header: null,
+    navigationOptions: {
+      header: null
+    }
+  },
+  DeckDetail: {
+    screen: DeckDetail
+  }
+});
+
+function FlashCardsStatusBar(props) {
+  const backgroundColor = purple;
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  );
+}
+
 function App() {
   return (
     <Provider store={store}>
-      <Tabs />
+      <View style={{ flex: 1 }}>
+        <FlashCardsStatusBar barStyle="light-content" />
+        <MainNavigation />
+      </View>
     </Provider>
   );
 }

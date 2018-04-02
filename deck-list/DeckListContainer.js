@@ -1,11 +1,22 @@
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Component } from "react";
 import DeckList from "./DeckList";
+import { getDecks } from "../utils/api";
+import { reveiceDecks } from "./actions";
 
-function DeckListContainer(props) {
-  const { decks } = props;
-  return <DeckList decks={decks} />;
+class DeckListContainer extends Component {
+  componentDidMount() {
+    const { loadDecks } = this.props;
+    loadDecks();
+  }
+
+  render() {
+    const { decks } = this.props;
+    return (
+      <DeckList decks={decks} {...this.props} /> // transferring props
+    );
+  }
 }
 
 function mapStateToProps({ decks }) {
@@ -16,8 +27,17 @@ function mapStateToProps({ decks }) {
   return { decks: decksWithKeys };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    loadDecks: () => {
+      getDecks().then(decks => dispatch(reveiceDecks(decks)));
+    }
+  };
+}
+
 DeckListContainer.propTypes = {
-  decks: PropTypes.arrayOf(PropTypes.object).isRequired
+  decks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadDecks: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps)(DeckListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckListContainer);

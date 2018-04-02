@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import NewDeck from "./NewDeck";
 import { addDeck } from "../deck-list/actions";
+import { saveDeckTitle } from "../utils/api";
 
 class NewDeckContainer extends React.Component {
   state = {
@@ -15,6 +16,7 @@ class NewDeckContainer extends React.Component {
   createDeck = title => {
     const { dispatchCreateDeck } = this.props;
     dispatchCreateDeck(title);
+    saveDeckTitle(title);
   };
 
   render() {
