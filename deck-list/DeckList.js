@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Button } from "react-native";
 import PropTypes from "prop-types";
+import { removeDecks } from "../utils/api";
 
 function RenderDeck({ item, navigation }) {
   return (
@@ -24,6 +25,10 @@ function DeckList({ decks, navigation }) {
       <FlatList
         data={decks}
         renderItem={({ item }) => RenderDeck({ item, navigation })}
+        ListEmptyComponent={<Text>No decks at the moment</Text>}
+        ListFooterComponent={
+          <Button title="Delete Decks" onPress={() => removeDecks()} />
+        }
       />
     </View>
   );

@@ -1,4 +1,4 @@
-import { ADD_DECK, RECEIVE_DECKS } from "./actions";
+import { ADD_DECK, RECEIVE_DECKS, CREATE_CARD } from "./actions";
 
 function decks(state = {}, action) {
   switch (action.type) {
@@ -6,12 +6,22 @@ function decks(state = {}, action) {
       const newDeck = action.deck;
       return {
         ...state,
-        [newDeck.title]: { ...newDeck }
+        [newDeck.title.toLowerCase()]: { ...newDeck }
       };
     }
     case RECEIVE_DECKS: {
       return {
         ...action.decks
+      };
+    }
+    case CREATE_CARD: {
+      const lowerCaseTitle = action.title.toLowerCase();
+      return {
+        ...state,
+        [lowerCaseTitle]: {
+          ...state[lowerCaseTitle],
+          cards: [...state[lowerCaseTitle].cards, action.card]
+        }
       };
     }
     default: {

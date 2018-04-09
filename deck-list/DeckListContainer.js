@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import DeckList from "./DeckList";
 import { getDecks } from "../utils/api";
-import { reveiceDecks } from "./actions";
+import { receiveDecks } from "./actions";
 
 class DeckListContainer extends Component {
   componentDidMount() {
@@ -30,7 +30,7 @@ function mapStateToProps({ decks }) {
 function mapDispatchToProps(dispatch) {
   return {
     loadDecks: () => {
-      getDecks().then(decks => dispatch(reveiceDecks(decks)));
+      getDecks().then(decks => dispatch(receiveDecks(decks)));
     }
   };
 }
