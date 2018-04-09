@@ -14,9 +14,17 @@ class NewDeckContainer extends React.Component {
   handleTitleChange = title => this.setState({ title });
 
   createDeck = title => {
-    const { dispatchCreateDeck } = this.props;
-    dispatchCreateDeck(title);
-    saveDeckTitle(title);
+    const { decks, dispatchCreateDeck } = this.props;
+    if (!title) {
+      console.log("title is empty");
+      return;
+    }
+    if (decks[title.toLowerCase()]) {
+      console.log("deck title already taken");
+      return;
+    }
+    dispatchCreateDeck(title); // save the deck to the redux store
+    saveDeckTitle(title); // save the deck to the local storage
   };
 
   render() {
@@ -35,11 +43,18 @@ class NewDeckContainer extends React.Component {
 }
 
 NewDeckContainer.propTypes = {
+  decks: PropTypes.objectOf(PropTypes.object).isRequired,
   dispatchCreateDeck: PropTypes.func.isRequired
 };
 
+function mapStateToProps({ decks }) {
+  return {
+    decks
+  };
+}
+
 const mapDispatchToProps = dispatch => ({
-  dispatchCreateDeck: title => dispatch(addDeck({ title }))
+  dispatchCreateDeck: title => dispatch(addDeck({ title, cards: [] }))
 });
 
-export default connect(null, mapDispatchToProps)(NewDeckContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NewDeckContainer);
