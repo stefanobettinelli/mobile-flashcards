@@ -15,10 +15,11 @@ class DeckDetailContainer extends Component {
   };
 
   createCard = card => {
-    const { dispatchCreateCard } = this.props;
     const { title } = this.props.navigation.state.params;
-    // dispatchCreateCard(title, card);
-    dispatchCreateCard(title, { question: "animali?", answer: "gattini!!!" });
+    const { navigation } = this.props;
+    navigation.navigate("AddCard", {
+      title
+    });
   };
 
   startQuiz = () => {
@@ -49,7 +50,6 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatchCreateCard: (title, card) =>
       addCardToDeck(title, card).then(() => dispatch(createCard(title, card)))
-    // addCardToDeck(title, card).then(decks => console.log("add card: ", decks))
   };
 }
 

@@ -6,7 +6,8 @@ import { Constants } from "expo";
 import { StackNavigator, TabNavigator } from "react-navigation";
 import DeckListContainer from "./deck-list/DeckListContainer";
 import NewDeckContainer from "./new-deck/NewDeckContainer";
-import DeckDetail from "./deck-detail/DeckDetail";
+import DeckDetailContainer from "./deck-detail/DeckDetailContainer";
+import AddCardContainer from "./add-card/AddCardContainer";
 import rootReducer from "./rootReducer";
 import { purple } from "./utils/colors";
 
@@ -31,7 +32,10 @@ const MainNavigation = StackNavigator({
     }
   },
   DeckDetail: {
-    screen: DeckDetail
+    screen: DeckDetailContainer
+  },
+  AddCard: {
+    screen: AddCardContainer
   }
 });
 

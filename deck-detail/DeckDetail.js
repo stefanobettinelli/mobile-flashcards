@@ -9,6 +9,7 @@ function DeckDetail({ deck, createCard, startQuiz }) {
       <Text>cards {deck ? deck.cards.length : 0}</Text>
       <Button title="Add Card" onPress={createCard} />
       <Button title="Start Quiz" onPress={startQuiz} />
+      <Text>{JSON.stringify(deck)}</Text>
     </View>
   );
 }

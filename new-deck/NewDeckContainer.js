@@ -31,7 +31,6 @@ class NewDeckContainer extends React.Component {
     const { title } = this.state;
     return (
       <View>
-        <Text>What is the title of your deck?</Text>
         <NewDeck
           title={title}
           handleTitleChange={this.handleTitleChange}
