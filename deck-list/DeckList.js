@@ -1,7 +1,39 @@
 import React from "react";
-import { View, Text, FlatList, TouchableOpacity, Button } from "react-native";
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import PropTypes from "prop-types";
+import { bgColor, darkGray, lightGray, white } from "../utils/colors";
 import { removeDecks } from "../utils/api";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    overflow: "hidden",
+    padding: 20,
+    backgroundColor: bgColor
+  },
+  deck: {
+    fontSize: 26,
+    color: darkGray,
+    textAlign: "center",
+    backgroundColor: white,
+    height: 100,
+    padding: 20,
+    marginBottom: 10,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: darkGray
+  },
+  deckCardNo: {
+    color: lightGray
+  }
+});
 
 function RenderDeck({ item, navigation }) {
   return (
@@ -13,7 +45,12 @@ function RenderDeck({ item, navigation }) {
           })
         }
       >
-        <Text>{item.title}</Text>
+        <Text style={styles.deck}>
+          {item.title}
+          <Text style={styles.deckCardNo}>
+            {`\n${item.cards.length} Cards`}
+          </Text>
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -21,7 +58,7 @@ function RenderDeck({ item, navigation }) {
 
 function DeckList({ decks, navigation }) {
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={decks}
         renderItem={({ item }) => RenderDeck({ item, navigation })}

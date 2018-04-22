@@ -6,6 +6,10 @@ import { addCardToDeck } from "../utils/api";
 import { createCard } from "../deck-list/actions";
 
 class AddCardContainer extends React.Component {
+  static navigationOptions = () => ({
+    title: "Add Card"
+  });
+
   state = {
     question: "",
     answer: ""
@@ -19,6 +23,7 @@ class AddCardContainer extends React.Component {
     const { title } = this.props.navigation.state.params;
     const { dispatchCreateCard } = this.props;
     dispatchCreateCard(title, card);
+    this.props.navigation.goBack();
   };
 
   render() {

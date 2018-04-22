@@ -1,15 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, Text, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { bgColor, darkGray, lightGray, white } from "../utils/colors";
+import {
+  PrimarySubmitButton,
+  SecondarySubmitButton
+} from "../commons/TextButton";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 70,
+    paddingBottom: 70,
+    alignItems: "center",
+    backgroundColor: bgColor
+  },
+  deckTitle: {
+    fontSize: 34,
+    color: darkGray
+  },
+  cardNo: {
+    fontSize: 26,
+    color: lightGray
+  },
+  btn: {
+    flex: 1,
+    justifyContent: "flex-end"
+  }
+});
 
 function DeckDetail({ deck, createCard, startQuiz }) {
   return (
-    <View>
-      <Text>{deck ? deck.title : ""}</Text>
-      <Text>cards {deck ? deck.cards.length : 0}</Text>
-      <Button title="Add Card" onPress={createCard} />
-      <Button title="Start Quiz" onPress={startQuiz} />
-      <Text>{JSON.stringify(deck)}</Text>
+    <View style={styles.container}>
+      <Text style={styles.deckTitle}>{deck ? deck.title : ""}</Text>
+      <Text style={styles.cardNo}>cards {deck ? deck.cards.length : 0}</Text>
+      <View style={styles.btn}>
+        <PrimarySubmitButton onPress={createCard} style={{ marginBottom: 10 }}>
+          Add Card
+        </PrimarySubmitButton>
+        <SecondarySubmitButton onPress={startQuiz}>
+          Start Quiz
+        </SecondarySubmitButton>
+      </View>
+      {/* <Text>{JSON.stringify(deck)}</Text> */}
     </View>
   );
 }

@@ -1,7 +1,13 @@
 export const purple = "#292477";
-export const gray = "#757575";
+export const gray = "#c0c0c0";
+export const darkGray = "#373737";
+export const lightGray = "#757575";
 export const white = "#fff";
 export const red = "#b71845";
+export const green = "#31b959";
+export const bgColor = "#c7ffcf";
+export const face = "#57dff0";
+export const back = "#f1c40f";
 export const orange = "#f26f28";
 export const blue = "#4e4cb8";
 export const lightPurp = "#7c53c3";

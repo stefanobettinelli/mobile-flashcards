@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import DeckDetail from "./DeckDetail";
-import { addCardToDeck } from "../utils/api";
-import { createCard } from "../deck-list/actions";
 
 class DeckDetailContainer extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -14,7 +12,14 @@ class DeckDetailContainer extends Component {
     };
   };
 
-  createCard = card => {
+  getDeck = () => {
+    const { title } = this.props.navigation.state.params;
+    const { decks } = this.props;
+    const deck = decks[title.toLowerCase()];
+    return deck;
+  };
+
+  createCard = () => {
     const { title } = this.props.navigation.state.params;
     const { navigation } = this.props;
     navigation.navigate("AddCard", {
@@ -23,13 +28,13 @@ class DeckDetailContainer extends Component {
   };
 
   startQuiz = () => {
-    console.log("start quiz");
+    const deck = this.getDeck();
+    const { navigation } = this.props;
+    navigation.navigate("Quiz", { deck });
   };
 
   render() {
-    const { title } = this.props.navigation.state.params;
-    const { decks } = this.props;
-    const deck = decks[title.toLowerCase()];
+    const deck = this.getDeck();
     return (
       <DeckDetail
         deck={deck}
@@ -46,20 +51,9 @@ function mapStateToProps({ decks }) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatchCreateCard: (title, card) =>
-      addCardToDeck(title, card).then(() => dispatch(createCard(title, card)))
-  };
-}
-
 DeckDetailContainer.propTypes = {
   decks: PropTypes.objectOf(PropTypes.object).isRequired,
-  navigation: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
-    .isRequired,
-  dispatchCreateCard: PropTypes.func.isRequired
+  navigation: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  DeckDetailContainer
-);
+export default connect(mapStateToProps)(DeckDetailContainer);

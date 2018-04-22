@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import NewDeck from "./NewDeck";
@@ -14,36 +13,37 @@ class NewDeckContainer extends React.Component {
   handleTitleChange = title => this.setState({ title });
 
   createDeck = title => {
-    const { decks, dispatchCreateDeck } = this.props;
+    const { decks, dispatchCreateDeck, navigation } = this.props;
     if (!title) {
-      console.log("title is empty");
       return;
     }
     if (decks[title.toLowerCase()]) {
-      console.log("deck title already taken");
       return;
     }
     dispatchCreateDeck(title); // save the deck to the redux store
     saveDeckTitle(title); // save the deck to the local storage
+    navigation.navigate("DeckDetail", {
+      title
+    }); // go to the newly created deck individual view
+    this.setState({ title: "" }); // reset title form
   };
 
   render() {
     const { title } = this.state;
     return (
-      <View>
-        <NewDeck
-          title={title}
-          handleTitleChange={this.handleTitleChange}
-          createDeck={this.createDeck}
-        />
-      </View>
+      <NewDeck
+        title={title}
+        handleTitleChange={this.handleTitleChange}
+        createDeck={this.createDeck}
+      />
     );
   }
 }
 
 NewDeckContainer.propTypes = {
   decks: PropTypes.objectOf(PropTypes.object).isRequired,
-  dispatchCreateDeck: PropTypes.func.isRequired
+  dispatchCreateDeck: PropTypes.func.isRequired,
+  navigation: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired
 };
 
 function mapStateToProps({ decks }) {
