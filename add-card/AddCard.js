@@ -38,53 +38,48 @@ const styles = StyleSheet.create({
   }
 });
 
-class AddCard extends React.Component {
-  newCard = (question, answer) => {
-    if (!question || !answer) return null;
-    return {
-      question,
-      answer
-    };
+const createCard = (question, answer) => {
+  if (!question || !answer) return null;
+  return {
+    question,
+    answer
   };
+};
 
-  render() {
-    const {
-      deckTitle,
-      handleSubmitNewCard,
-      question,
-      answer,
-      handleQuestionChange,
-      handleAnswerChange
-    } = this.props;
-
-    const newCard = this.newCard(question, answer);
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.text}>{deckTitle}</Text>
-        <Text style={styles.qa}>Question</Text>
-        <TextInput
-          style={styles.textInput}
-          value={question}
-          onChangeText={handleQuestionChange}
-        />
-        <Text style={styles.qa}>Answer</Text>
-        <TextInput
-          style={styles.textInput}
-          value={answer}
-          onChangeText={handleAnswerChange}
-        />
-        <View style={styles.btn}>
-          <SecondarySubmitButton
-            // disabled={!newCard}
-            onPress={() => handleSubmitNewCard(newCard)}
-          >
-            Submit
-          </SecondarySubmitButton>
-        </View>
+function AddCard({
+  deckTitle,
+  handleSubmitNewCard,
+  question,
+  answer,
+  handleQuestionChange,
+  handleAnswerChange
+}) {
+  const newCard = createCard(question, answer);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{deckTitle}</Text>
+      <Text style={styles.qa}>Question</Text>
+      <TextInput
+        style={styles.textInput}
+        value={question}
+        onChangeText={handleQuestionChange}
+      />
+      <Text style={styles.qa}>Answer</Text>
+      <TextInput
+        style={styles.textInput}
+        value={answer}
+        onChangeText={handleAnswerChange}
+      />
+      <View style={styles.btn}>
+        <SecondarySubmitButton
+          // disabled={!newCard}
+          onPress={() => handleSubmitNewCard(newCard)}
+        >
+          Submit
+        </SecondarySubmitButton>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 AddCard.propTypes = {
