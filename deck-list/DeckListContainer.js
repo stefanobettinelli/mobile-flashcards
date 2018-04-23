@@ -24,6 +24,9 @@ function mapStateToProps({ decks }) {
     key: deckId,
     ...decks[deckId]
   }));
+  decksWithKeys.sort((deckA, deckB) =>
+    deckA.title.toLowerCase().localeCompare(deckB.title.toLowerCase())
+  );
   return { decks: decksWithKeys };
 }
 
