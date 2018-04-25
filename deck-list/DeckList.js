@@ -63,9 +63,9 @@ function DeckList({ decks, navigation }) {
         <FlatList
           data={decks}
           renderItem={({ item }) => RenderDeck({ item, navigation })}
-          ListFooterComponent={
-            <Button title="Delete Decks" onPress={() => removeDecks()} />
-          }
+          // ListFooterComponent={
+          //   <Button title="Delete Decks" onPress={() => removeDecks()} />
+          // }
         />
       ) : (
         <Button
