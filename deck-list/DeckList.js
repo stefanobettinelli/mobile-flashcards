@@ -59,14 +59,20 @@ function RenderDeck({ item, navigation }) {
 function DeckList({ decks, navigation }) {
   return (
     <View style={styles.container}>
-      <FlatList
-        data={decks}
-        renderItem={({ item }) => RenderDeck({ item, navigation })}
-        ListEmptyComponent={<Text>No decks at the moment</Text>}
-        ListFooterComponent={
-          <Button title="Delete Decks" onPress={() => removeDecks()} />
-        }
-      />
+      {decks.length > 0 ? (
+        <FlatList
+          data={decks}
+          renderItem={({ item }) => RenderDeck({ item, navigation })}
+          ListFooterComponent={
+            <Button title="Delete Decks" onPress={() => removeDecks()} />
+          }
+        />
+      ) : (
+        <Button
+          title="No decks...Create one now!"
+          onPress={() => navigation.navigate("NewDeck")}
+        />
+      )}
     </View>
   );
 }

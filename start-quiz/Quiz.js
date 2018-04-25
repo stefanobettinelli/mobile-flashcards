@@ -9,6 +9,7 @@ import {
   PrimarySubmitButton,
   SecondarySubmitButton
 } from "../commons/TextButton";
+import { clearLocalNotification, setLocalNotification } from "../utils/helpers";
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +71,9 @@ class Quiz extends React.Component {
     flip: false
   };
 
+  // flip action depends on prev State
+  handleFlip = () => this.setState(({ flip }) => ({ flip: !flip }));
+
   render() {
     const {
       score,
@@ -83,6 +87,9 @@ class Quiz extends React.Component {
     } = this.props;
     const { flip } = this.state;
     const cardNo = cardIndex + 1;
+
+    if (isQuizOver) clearLocalNotification().then(setLocalNotification);
+
     return isQuizOver ? (
       <View style={styles.containerQuizOver}>
         <Text style={styles.quizOverText}>
@@ -107,16 +114,13 @@ class Quiz extends React.Component {
           flipHorizontal
           flipVertical={false}
           clickable={false}
-          onFlipEnd={isFlipEnd => {
-            console.log("isFlipEnd", isFlipEnd);
-          }}
           style={{ width: "100%" }}
         >
           {/* Face Side */}
           <View style={styles.face}>
             <Text style={styles.cardNo}>{`${cardNo}/${deckSize}`}</Text>
             <Text style={styles.qa}>{card.question}</Text>
-            <TouchableOpacity onPress={() => this.setState({ flip: !flip })}>
+            <TouchableOpacity onPress={this.handleFlip}>
               <Text style={styles.viewQA}>View Answer</Text>
             </TouchableOpacity>
             <View style={styles.btn}>
@@ -135,7 +139,7 @@ class Quiz extends React.Component {
           <View style={styles.back}>
             <Text style={styles.cardNo}>{`${cardNo}/${deckSize}`}</Text>
             <Text style={styles.qa}>{card.answer}</Text>
-            <TouchableOpacity onPress={() => this.setState({ flip: !flip })}>
+            <TouchableOpacity onPress={this.handleFlip}>
               <Text style={styles.viewQA}>View Question</Text>
             </TouchableOpacity>
           </View>

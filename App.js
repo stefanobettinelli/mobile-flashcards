@@ -11,6 +11,7 @@ import AddCardContainer from "./add-card/AddCardContainer";
 import rootReducer from "./rootReducer";
 import { purple } from "./utils/colors";
 import QuizContainer from "./start-quiz/QuizContainer";
+import { setLocalNotification } from "./utils/helpers";
 
 const store = createStore(rootReducer);
 
@@ -65,15 +66,21 @@ function FlashCardsStatusBar(props) {
   );
 }
 
-function App() {
-  return (
-    <Provider store={store}>
-      <View style={{ flex: 1 }}>
-        <FlashCardsStatusBar barStyle="light-content" />
-        <MainNavigation />
-      </View>
-    </Provider>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <FlashCardsStatusBar barStyle="light-content" />
+          <MainNavigation />
+        </View>
+      </Provider>
+    );
+  }
 }
 
 export default App;

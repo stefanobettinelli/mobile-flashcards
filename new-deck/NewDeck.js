@@ -1,55 +1,55 @@
 import React from "react";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from "react-native";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { PrimarySubmitButton } from "../commons/TextButton";
 import { bgColor, darkGray, white } from "../utils/colors";
+import { PrimarySubmitButton } from "../commons/TextButton";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 70,
-    paddingBottom: 70,
-    paddingLeft: 20,
-    paddingRight: 20,
+    justifyContent: "center",
+    padding: 20,
     backgroundColor: bgColor
   },
-  text: {
-    fontSize: 32,
-    textAlign: "center",
-    marginBottom: 80
-  },
   textInput: {
+    height: 50,
+    marginBottom: 30,
     fontSize: 28,
     borderRadius: 2,
     borderWidth: 2,
     borderColor: darkGray,
     backgroundColor: white
   },
-  btn: {
-    flex: 1,
-    alignSelf: "center",
-    justifyContent: "flex-end"
+  text: {
+    fontSize: 32,
+    textAlign: "center",
+    marginBottom: 80
   }
 });
 
-function NewDeck(props) {
-  const { title, handleTitleChange, createDeck } = props;
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>What is the title of your new deck?</Text>
-      <TextInput
-        style={styles.textInput}
-        value={title}
-        onChangeText={handleTitleChange}
-      />
-      <View style={styles.btn}>
-        <PrimarySubmitButton onPress={() => createDeck(title)}>
-          Submit
-        </PrimarySubmitButton>
-      </View>
-    </View>
-  );
-}
+const NewDeck = ({ title, handleTitleChange, createDeck }) => (
+  <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <Text style={styles.text}>What is the title of your new deck?</Text>
+    <TextInput
+      style={styles.textInput}
+      value={title}
+      onChangeText={handleTitleChange}
+    />
+    <View style={{ height: 60 }} />
+    <PrimarySubmitButton
+      style={{ alignSelf: "center" }}
+      onPress={() => createDeck(title)}
+    >
+      Submit
+    </PrimarySubmitButton>
+  </KeyboardAvoidingView>
+);
 
 NewDeck.propTypes = {
   title: PropTypes.string.isRequired,

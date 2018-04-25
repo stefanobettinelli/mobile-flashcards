@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from "react-native";
 import PropTypes from "prop-types";
 import { bgColor, darkGray, white } from "../utils/colors";
 import { SecondarySubmitButton } from "../commons/TextButton";
@@ -7,10 +13,8 @@ import { SecondarySubmitButton } from "../commons/TextButton";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 70,
-    paddingBottom: 70,
-    paddingLeft: 20,
-    paddingRight: 20,
+    justifyContent: "center",
+    padding: 20,
     backgroundColor: bgColor
   },
   text: {
@@ -56,7 +60,7 @@ function AddCard({
 }) {
   const newCard = createCard(question, answer);
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.text}>{deckTitle}</Text>
       <Text style={styles.qa}>Question</Text>
       <TextInput
@@ -70,15 +74,15 @@ function AddCard({
         value={answer}
         onChangeText={handleAnswerChange}
       />
-      <View style={styles.btn}>
-        <SecondarySubmitButton
-          // disabled={!newCard}
-          onPress={() => handleSubmitNewCard(newCard)}
-        >
-          Submit
-        </SecondarySubmitButton>
-      </View>
-    </View>
+      <View style={{ height: 60 }} />
+      <SecondarySubmitButton
+        // disabled={!newCard}
+        style={{ alignSelf: "center" }}
+        onPress={() => handleSubmitNewCard(newCard)}
+      >
+        Submit
+      </SecondarySubmitButton>
+    </KeyboardAvoidingView>
   );
 }
 

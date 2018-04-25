@@ -1,7 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, Text, View } from "react-native";
-import { bgColor, darkGray, lightGray, white } from "../utils/colors";
+import {
+  bgColor,
+  darkGray,
+  disabledGray,
+  disabledWhite,
+  lightGray
+} from "../utils/colors";
 import {
   PrimarySubmitButton,
   SecondarySubmitButton
@@ -26,6 +32,13 @@ const styles = StyleSheet.create({
   btn: {
     flex: 1,
     justifyContent: "flex-end"
+  },
+  disabled: {
+    color: disabledWhite,
+    backgroundColor: disabledGray
+  },
+  enabled: {
+    backgroundColor: darkGray
   }
 });
 
@@ -38,7 +51,11 @@ function DeckDetail({ deck, createCard, startQuiz }) {
         <PrimarySubmitButton onPress={createCard} style={{ marginBottom: 10 }}>
           Add Card
         </PrimarySubmitButton>
-        <SecondarySubmitButton onPress={startQuiz}>
+        <SecondarySubmitButton
+          onPress={startQuiz}
+          disabled={deck.cards.length <= 0}
+          style={deck.cards.length <= 0 ? styles.disabled : styles.enabled}
+        >
           Start Quiz
         </SecondarySubmitButton>
       </View>

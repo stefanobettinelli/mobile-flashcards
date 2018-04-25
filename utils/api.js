@@ -43,8 +43,8 @@ export function addCardToDeck(title, card) {
     );
 }
 
-export function removeDecks() {
-  AsyncStorage.removeItem(DECKS_STORAGE_KEY, () =>
-    console.log("decks removed")
-  );
-}
+// export function removeDecks() {
+//   AsyncStorage.removeItem(DECKS_STORAGE_KEY, () =>
+//     console.log("decks removed")
+//   );
+// }

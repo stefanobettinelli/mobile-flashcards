@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
 import { darkGray, green, purple, white, red } from "../utils/colors";
 
 const styles = StyleSheet.create({
@@ -41,13 +42,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export function TextButton({ children, onPress, style = {} }) {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Text style={[styles.reset, style]}>{children}</Text>
-    </TouchableOpacity>
-  );
-}
+const ButtonsPropTypes = {
+  children: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  style: PropTypes.any
+};
 
 export function PrimarySubmitButton({ children, onPress, style = {} }) {
   return (
@@ -59,15 +58,28 @@ export function PrimarySubmitButton({ children, onPress, style = {} }) {
   );
 }
 
-export function SecondarySubmitButton({ children, onPress, style = {} }) {
+PrimarySubmitButton.propTypes = {
+  ...ButtonsPropTypes
+};
+
+export function SecondarySubmitButton({
+  children,
+  onPress,
+  style = {},
+  disabled = false
+}) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <Text style={[styles.reset, styles.secondarySubmitBtn, style]}>
         {children}
       </Text>
     </TouchableOpacity>
   );
 }
+
+SecondarySubmitButton.propTypes = {
+  ...ButtonsPropTypes
+};
 
 export function CorrectSubmitButton({ children, onPress, style = {} }) {
   return (
@@ -79,6 +91,10 @@ export function CorrectSubmitButton({ children, onPress, style = {} }) {
   );
 }
 
+CorrectSubmitButton.propTypes = {
+  ...ButtonsPropTypes
+};
+
 export function IncorrectSubmitButton({ children, onPress, style = {} }) {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -88,3 +104,7 @@ export function IncorrectSubmitButton({ children, onPress, style = {} }) {
     </TouchableOpacity>
   );
 }
+
+IncorrectSubmitButton.propTypes = {
+  ...ButtonsPropTypes
+};
